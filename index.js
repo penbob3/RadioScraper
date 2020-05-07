@@ -7,8 +7,12 @@ const iplocation = require('iplocation');
 
 var express = require('express');
 var app = express();
-const port = process.env.PORT;
+var port = process.env.PORT;
 const productionPort = 80;
+
+if (port == undefined) {
+  port = productionPort;
+}
 
 async function initBrowser() {
     var songJson = {"title": "", "artist": ""};
