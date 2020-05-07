@@ -55,14 +55,24 @@ async function initBrowser() {
           res.send(finalResponse);
           if (port == productionPort) {
             var location = await iplocation(req.ip);
-            console.log("Request from " + location.region.name + ", " + location.country.name + " (" + req.ip + ") recieved and fulfilled.")
+            console.log("Request from " + location.region.name + ", " + location.country.name + " (" + req.ip + ") recieved and fulfilled.");
           } else {
-            console.log("Local request recieved and fulfilled.")
+            console.log("Local request recieved and fulfilled.");
           }
         }
       } else {
         res.status(401)
            .send('Invalid or missing token in header');
+        if (port == productionPort) {
+          try {
+            var location = await iplocation(req.ip);
+            console.log("Request from " + location.region.name + ", " + location.country.name + " (" + req.ip + ") had invalid or missing token!");
+          } catch {
+            console.log("Request from " + req.ip + " had invalid or missing token! (Is ipapi down/overused?)");
+          }
+        } else {
+          console.log("Local request has invalid token!")
+        }
       }
     });
 
@@ -93,6 +103,16 @@ async function initBrowser() {
       } else {
         res.status(401)
            .send('Invalid or missing token in header');
+        if (port == productionPort) {
+          try {
+            var location = await iplocation(req.ip);
+            console.log("Request from " + location.region.name + ", " + location.country.name + " (" + req.ip + ") had invalid or missing token!");
+          } catch {
+            console.log("Request from " + req.ip + " had invalid or missing token! (Is ipapi down/overused?)");
+          }
+        } else {
+          console.log("Local request has invalid token!")
+        }
       }
     });
     
