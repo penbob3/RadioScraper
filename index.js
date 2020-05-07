@@ -47,7 +47,9 @@ async function initBrowser() {
     });
 
     app.post('/', async (req, res) => {
+        console.log(req);
         var reqVer = req.queryResult.intent.displayName;
+
         if (reqVer == "getCurrent") {
             await page.reload({ waitUntil: ["networkidle2", "domcontentloaded"]});
             nowPlaying = parse.parse(await page.$eval('.item-current', e => e.innerHTML));
