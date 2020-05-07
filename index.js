@@ -3,9 +3,7 @@ var parse = require('node-html-parser');
 
 var express = require('express');
 var app = express();
-app.use(express.json());
-const port = 3621;
-
+const port = process.env.PORT;
 
 var sampleJson = {
     "payload": {
@@ -49,8 +47,8 @@ async function initBrowser() {
     });
 
     app.post('/', async (req, res) => {
-        console.log(req.body);
-        var reqVer = req.body.queryResult.intent.displayName;
+        console.log(req);
+        var reqVer = req.queryResult.intent.displayName;
 
         if (reqVer == "getCurrent") {
             await page.reload({ waitUntil: ["networkidle2", "domcontentloaded"]});
