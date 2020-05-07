@@ -1,0 +1,17 @@
+{
+  "name": "chillscraper",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "index.js"
+  },
+  "author": "APTheHunter",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "htmlparser2": "^4.1.0",
+    "node-html-parser": "^1.2.16",
+    "puppeteer": "^3.0.3"
+  }
+}
