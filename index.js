@@ -5,6 +5,23 @@ var express = require('express');
 var app = express();
 const port = process.env.PORT;
 
+var sampleJson = {
+    "payload": {
+      "google": {
+        "expectUserResponse": false,
+        "richResponse": {
+          "items": [
+            {
+              "simpleResponse": {
+                "textToSpeech": ""
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+
 async function initBrowser() {
     const browser = await pupp.launch();
     const page = await browser.newPage();
@@ -27,6 +44,22 @@ async function initBrowser() {
         var songArtist = nowPlaying.querySelector('.artist').text;
         var fullSong = songTitle + " by " + songArtist;
         res.send(fullSong);
+    });
+
+    app.post('/', async (req, res) => {
+        var reqVer = req.queryResult.intent.displayName;
+        if (reqVer == "getCurrent") {
+            await page.reload({ waitUntil: ["networkidle2", "domcontentloaded"]});
+            nowPlaying = parse.parse(await page.$eval('.item-current', e => e.innerHTML));
+            var songTitle = nowPlaying.querySelector('.title').text;
+            var songArtist = nowPlaying.querySelector('.artist').text;
+            var fullSong = songTitle + " by " + songArtist;
+
+            var newRes = sampleJson;
+            sampleJson.payload.google.richResponse.items[0].simpleResponse.textToSpeech = fullSong;
+            res.send(sampleJson);
+        }
+        
     });
 }
 
