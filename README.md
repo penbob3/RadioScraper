@@ -5,7 +5,12 @@ The song's title and artist name are retrieved.
 Uses Express, Puppeteer, node-html-parser and iplocation
 # How to use
 It works just like any Node app: clone it, run 'npm install', then launch with 'node index.js'  
-Don't forget to set the port in a .env file! Otherwise it will default to port 80.   
+Don't forget to set the port and token in a .env file! Otherwise it will default to port 80/authentication wont work.  
+Example:
+```
+PORT=80
+TOKEN=EasyToGuess123
+```
 Endpoints are /currentsong and /prevsong  
 Data is returned in a JSON response of the following format (Without the dashes obviously):
 
